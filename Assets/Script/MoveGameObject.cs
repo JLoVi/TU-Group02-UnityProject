@@ -13,10 +13,13 @@ public class MoveGameObject : MonoBehaviour
 
     public GameObject player;
 
+    public bool borderSwitch;
+
     // Start is called before the first frame update
     void Start()
     {
         moving = false;
+        borderSwitch = false;
 
         StartCoroutine(MovementTimer());
     }
@@ -26,13 +29,26 @@ public class MoveGameObject : MonoBehaviour
     {
         if(moving)
         {
-            transform.Translate(player.transform.rotation * Vector3.forward * Time.deltaTime * speed);
+
+            if (borderSwitch) { 
+            // transform.Translate(player.transform.rotation * Vector3.forward * Time.deltaTime * speed);
+
+                transform.Translate(Vector3.forward * Time.deltaTime * speed);
+
+            }
+
+            if (!borderSwitch)
+            {
+                transform.Translate(Vector3.back * Time.deltaTime * speed);
+            }
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
         moving = true;
+
+        StartCoroutine(BorderSwitchTimer());
     }
 
     public IEnumerator MovementTimer()
@@ -40,5 +56,13 @@ public class MoveGameObject : MonoBehaviour
         yield return new WaitForSeconds(movementTime);
 
         moving = false;
+    }
+
+
+    public IEnumerator BorderSwitchTimer()
+    {
+        yield return new WaitForSeconds(5f);
+
+        borderSwitch = !borderSwitch;
     }
 }
