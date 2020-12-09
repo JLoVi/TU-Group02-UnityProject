@@ -31,15 +31,15 @@ public class MoveGameObject : MonoBehaviour
         {
 
             if (borderSwitch) { 
-            // transform.Translate(player.transform.rotation * Vector3.forward * Time.deltaTime * speed);
+            // transform.Translate(player.transform.rotation * Vector3.back * Time.deltaTime * speed);
 
-                transform.Translate(Vector3.forward * Time.deltaTime * speed);
+                transform.Translate(Vector3.back * Time.deltaTime * speed);
 
             }
 
             if (!borderSwitch)
             {
-                transform.Translate(Vector3.back * Time.deltaTime * speed);
+                transform.Translate(Vector3.forward * Time.deltaTime * speed);
             }
         }
     }
